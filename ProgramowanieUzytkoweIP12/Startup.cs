@@ -1,10 +1,13 @@
+using CQRS;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Model;
+using Model.DTO;
 using Repository_Pattern;
+using System.Collections.Generic;
 
 namespace ProgramowanieUzytkoweIP12
 {
@@ -23,6 +26,11 @@ namespace ProgramowanieUzytkoweIP12
             services.AddDbContext<Database>();
             services.AddScoped<BooksRepository>();
             services.AddScoped<AuthorRepository>();
+            services.AddScoped<CommandBus>();
+            services.AddScoped<QueryBus>();
+            services.AddScoped<IQueryHandler<GetBooksQuery, List<BookDTO>>, GetBooksQueryHandler>();
+            services.AddScoped<ICommandHandler<AddBookCommand>, AddBookCommandHandler>();
+            services.AddScoped<ICommandHandler<DeleteBookCommand>, DeleteBookCommandHandler>();
 
             services.AddSwaggerGen();
 
