@@ -71,7 +71,7 @@ namespace Repository_Pattern
 
         public bool DeleteDTO(int id)
         {
-            Author del = Db.Authors.Where(x => x.Id == id).FirstOrDefault();
+            Author del = Db.Authors.Include(x=>x.Books).Where(x => x.Id == id).FirstOrDefault();
 
             if (del.Books.Any())
             {
@@ -82,6 +82,23 @@ namespace Repository_Pattern
             Db.SaveChanges();
 
             return true;
+
+        }
+
+        public void AddAuthorRate(int id, int rate)
+        {
+            Author des = Db.Authors.Where(x => x.Id == id).FirstOrDefault();
+
+            Db.AuthorRates.Add(new AuthorRate
+            {
+                RateType = RateType.AuthorRate,
+                Author = des,
+                FkAuthor = des.Id,
+                Date = DateTime.Now,
+                Value = (short)rate
+            });
+
+            Db.SaveChanges();
 
         }
     }

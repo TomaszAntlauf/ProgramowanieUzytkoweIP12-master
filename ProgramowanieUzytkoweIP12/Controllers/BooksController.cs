@@ -44,7 +44,7 @@ namespace ProgramowanieUzytkoweIP12.Controllers
             repo.DeleteDTO(id);
         }
 
-        [HttpPost("/Dodaj ocene")]
+        [HttpPost("/Dodaj ocene ksiazce")]
         public void AddBookRate([FromBody] int id, int rate)
         {
             repo.AddBookRate(id, rate);

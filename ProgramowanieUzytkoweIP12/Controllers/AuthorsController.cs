@@ -37,5 +37,11 @@ namespace ProgramowanieUzytkoweIP12.Controllers
         {
             repo.DeleteDTO(id);
         }
+
+        [HttpPost("/Dodaj ocene autorowi")]
+        public void AddAuthorRate([FromBody] int id, int rate)
+        {
+            repo.AddAuthorRate(id, rate);
+        }
     }
 }
