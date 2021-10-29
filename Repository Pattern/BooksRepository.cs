@@ -35,7 +35,7 @@ namespace Repository_Pattern
             //        }
 
             //});
-            db.SaveChanges();
+            //db.SaveChanges();
         }
         public List<BookDTO> GetBooks(PaginationDTO pagination)
         {
@@ -47,8 +47,8 @@ namespace Repository_Pattern
             {
                 Id = b.Id,
                 ReleaseDate = b.ReleaseDate,
-                AvarageRates = b.Rates.Average(r => r.Value),
-                RatesCount = b.Rates.Count(),
+                AvarageRates = (b.Rates.Count() > 0 ? b.Rates.Average(r => r.Value) : 0),
+                RatesCount = (b.Rates.Count() > 0 ? b.Rates.Count() : 0),
                 Title = b.Title,
                 Authors = b.Authors.Select(a => new AuthorDTO
                 {
@@ -67,8 +67,8 @@ namespace Repository_Pattern
             {
                 Id = b.Id,
                 ReleaseDate = b.ReleaseDate,
-                AvarageRates = b.Rates.Average(r => r.Value),
-                RatesCount = (b.Rates != null ? b.Rates.Count() : 0),
+                AvarageRates = (b.Rates.Count() > 0 ? b.Rates.Average(r => r.Value):0),
+                RatesCount = (b.Rates.Count()>0 ? b.Rates.Count() : 0),
                 Title = b.Title,
                 Authors = b.Authors.Select(a => new AuthorDTO
                 {
@@ -89,6 +89,7 @@ namespace Repository_Pattern
 
             };
             book.Authors = Db.Authors.Where(a => brq.AuthorsId.Contains(a.Id)).ToList();
+            //book.Rates = null;
             Db.Books.Add(book);
             Db.SaveChanges();
 
@@ -114,6 +115,7 @@ namespace Repository_Pattern
             Book del = Db.Books.Where(x => x.Id == id).FirstOrDefault();
 
             Db.Books.Remove(del);
+            Db.SaveChanges();
 
             return true;
         }

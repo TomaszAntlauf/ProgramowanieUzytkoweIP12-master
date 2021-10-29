@@ -22,7 +22,8 @@ namespace ProgramowanieUzytkoweIP12
         {
             services.AddDbContext<Database>();
             services.AddScoped<BooksRepository>();
-            
+            services.AddScoped<AuthorRepository>();
+
             services.AddSwaggerGen();
 
             services.AddControllers();
