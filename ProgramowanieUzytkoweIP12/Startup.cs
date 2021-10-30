@@ -1,4 +1,5 @@
 using CQRS;
+using CQRS.Authors;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -26,11 +27,20 @@ namespace ProgramowanieUzytkoweIP12
             services.AddDbContext<Database>();
             services.AddScoped<BooksRepository>();
             services.AddScoped<AuthorRepository>();
+
             services.AddScoped<CommandBus>();
             services.AddScoped<QueryBus>();
+
             services.AddScoped<IQueryHandler<GetBooksQuery, List<BookDTO>>, GetBooksQueryHandler>();
+            services.AddScoped<IQueryHandler<GetBookQuery, BookDTO>, GetBookQueryHandler>();
             services.AddScoped<ICommandHandler<AddBookCommand>, AddBookCommandHandler>();
             services.AddScoped<ICommandHandler<DeleteBookCommand>, DeleteBookCommandHandler>();
+            services.AddScoped<ICommandHandler<AddBookRateCommand>, AddBookRateCommandHandler>();
+
+            services.AddScoped<IQueryHandler<GetAuthorsQuery, List<AuthorDTO>>, GetAuthorsQueryHandler>();
+            services.AddScoped<ICommandHandler<AddAuthorCommand>, AddAuthorCommandHandler>();
+            services.AddScoped<ICommandHandler<DeleteAuthorCommand>, DeleteAuthorCommandHandler>();
+            services.AddScoped<ICommandHandler<AddAuthorRateCommand>, AddAuthorRateCommandHandler>();
 
             services.AddSwaggerGen();
 
